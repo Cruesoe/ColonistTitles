@@ -12,7 +12,7 @@ Set a title in the Bio tab's rename dialog, and give each colonist their own tit
 
 [h2]Settings[/h2]
 [list]
-[*][b]Colonist bar and Map[/b]: choose which lines show in each place. By default the bar shows all three lines and the map shows the title only.
+[*][b]Colonist bar and Map[/b]: choose which lines show in each place. By default the bar shows all three lines and the map shows none.
 [*][b]Colors[/b]: the default title color, the royal title color, and the ideoligion role color (or each role's ideoligion color). A live preview shows the result.
 [*][b]Display[/b]: label background and opacity.
 [/list]

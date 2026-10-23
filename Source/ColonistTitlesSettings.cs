@@ -12,7 +12,7 @@ public class ColonistTitlesSettings : ModSettings
     public bool BarTitle = true;
     public bool BarRoyalTitle = true;
     public bool BarIdeoRole = true;
-    public bool MapTitle = true;
+    public bool MapTitle;
     public bool MapRoyalTitle;
     public bool MapIdeoRole;
     public bool UseBackstoryTitle = true;
@@ -31,7 +31,7 @@ public class ColonistTitlesSettings : ModSettings
         BarTitle = true;
         BarRoyalTitle = true;
         BarIdeoRole = true;
-        MapTitle = true;
+        MapTitle = false;
         MapRoyalTitle = false;
         MapIdeoRole = false;
         UseBackstoryTitle = true;
@@ -49,7 +49,7 @@ public class ColonistTitlesSettings : ModSettings
         Scribe_Values.Look(ref BarTitle, "barTitle", true);
         Scribe_Values.Look(ref BarRoyalTitle, "barRoyalTitle", true);
         Scribe_Values.Look(ref BarIdeoRole, "barIdeoRole", true);
-        Scribe_Values.Look(ref MapTitle, "mapTitle", true);
+        Scribe_Values.Look(ref MapTitle, "mapTitle");
         Scribe_Values.Look(ref MapRoyalTitle, "mapRoyalTitle");
         Scribe_Values.Look(ref MapIdeoRole, "mapIdeoRole");
         Scribe_Values.Look(ref UseBackstoryTitle, "useBackstoryTitle", true);
