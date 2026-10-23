@@ -5,9 +5,9 @@ namespace ColonistTitles;
 
 public class ColonistTitlesSettings : ModSettings
 {
-    public static readonly Color DefaultTitleColor = new Color(0.65f, 0.85f, 1f);
-    public static readonly Color DefaultRoyalTitleColor = new Color(1f, 0.82f, 0.35f);
-    public static readonly Color DefaultIdeoRoleColor = new Color(0.85f, 0.85f, 0.85f);
+    public static readonly Color DefaultTitleColor = new Color(1f, 0.8f, 0.4f);
+    public static readonly Color DefaultRoyalTitleColor = new Color(1f, 2f / 3f, 0f);
+    public static readonly Color DefaultIdeoRoleColor = new Color(1f, 2f / 3f, 0f);
 
     public bool BarTitle = true;
     public bool BarRoyalTitle = true;
