@@ -1,24 +1,23 @@
 [b]Shows each colonist's title under their name on the colonist bar and on the map.[/b]
 
-Set a title in the Bio tab's rename dialog, and give each colonist their own title color so you can tell your doctors from your miners at a glance.
+Set a title in the Bio tab's rename dialog so you can tell your doctors from your miners at a glance.
 
 [h2]Features[/h2]
 [list]
-[*]The colonist's title appears under their name on the colonist bar and on the map. Colonists without a title can show their backstory title instead.
+[*]The colonist's title appears under their name on the colonist bar, and on the map if you turn it on. Colonists without a title can show their backstory title instead.
 [*]Royal titles (Royalty) and ideoligion roles (Ideology) can appear as extra lines.
-[*]Each colonist can have their own title color: click the palette button next to the rename button on their Bio tab.
 [*]A full color picker with a color wheel, RGB, HSV and hex fields, and a palette.
 [/list]
 
 [h2]Settings[/h2]
 [list]
-[*][b]Colonist bar and Map[/b]: choose which lines show in each place. By default the bar shows all three lines and the map shows the title only.
-[*][b]Colors[/b]: the default title color, the royal title color, and the ideoligion role color (or each role's ideoligion color). A live preview shows the result.
+[*][b]Colonist bar and Map[/b]: choose which lines show in each place. By default the bar shows all three lines and the map shows none.
+[*][b]Colors[/b]: the title color, the royal title color, and the ideoligion role color (or each role's ideoligion color). A live preview shows the result.
 [*][b]Display[/b]: label background and opacity.
-[*][b]Colonist title colors[/b]: in a game, every colonist is listed with their title color, ready to change or reset.
 [/list]
 
 [h2]Compatibility[/h2]
+Works with Colony Groups: titles show under names on its colonist bar.
 Not compatible with Job In Bar or Titles For Me, which draw the same labels.
 Safe to add to an existing save.
 

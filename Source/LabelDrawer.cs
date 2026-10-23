@@ -10,22 +10,16 @@ public static class LabelDrawer
 
     private const float BackgroundPadding = GenMapUI.NameBGExtraWidth_Small;
 
-    private static readonly Dictionary<string, string> truncateCache = new Dictionary<string, string>();
-
     // Height of the vanilla name label this mod draws under.
     public static float NameHeight => Prefs.DisableTinyText ? GenMapUI.NameBGHeight_Small : GenMapUI.NameBGHeight_Tiny;
 
-    /// <summary>Draws lines centered on x, the first one's top at y.</summary>
-    public static void DrawLines(IReadOnlyList<TitleLine> lines, float x, float y, float maxWidth, float alpha)
+    /// <summary>Draws up to maxLines lines centered on x, the first one's top at y.</summary>
+    public static void DrawLines(IReadOnlyList<TitleLine> lines, float x, float y, float maxWidth, float alpha, int maxLines = int.MaxValue)
     {
-        if (lines.Count == 0)
+        int count = Mathf.Min(lines.Count, maxLines);
+        if (count <= 0)
         {
             return;
-        }
-
-        if (truncateCache.Count > 2000)
-        {
-            truncateCache.Clear();
         }
 
         ColonistTitlesSettings settings = ColonistTitlesMod.Settings;
@@ -36,10 +30,9 @@ public static class LabelDrawer
         Text.Anchor = TextAnchor.UpperCenter;
         float opacity = settings.Opacity * alpha;
 
-        for (int i = 0; i < lines.Count; i++)
+        for (int i = 0; i < count; i++)
         {
-            string text = lines[i].Text.Truncate(maxWidth, truncateCache);
-            float width = Text.CalcSize(text).x;
+            string text = lines[i].Shown(maxWidth, out float width);
             Rect background = new Rect(x - width / 2f - BackgroundPadding, y + i * LineHeight, width + BackgroundPadding * 2f, LineHeight);
             if (settings.DrawBackground)
             {

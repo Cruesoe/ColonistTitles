@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ColonistTitles_ModName>Colonist Titles</ColonistTitles_ModName>
-  <ColonistTitles_TitleColorButton>Choose the color of {PAWN_labelShort}'s title.</ColonistTitles_TitleColorButton>
 
   <ColonistTitles_SectionBar>Colonist bar</ColonistTitles_SectionBar>
   <ColonistTitles_SectionMap>Map</ColonistTitles_SectionMap>
   <ColonistTitles_SectionDisplay>Display</ColonistTitles_SectionDisplay>
   <ColonistTitles_SectionColors>Colors</ColonistTitles_SectionColors>
   <ColonistTitles_SectionPreview>Preview</ColonistTitles_SectionPreview>
-  <ColonistTitles_SectionColonists>Colonist title colors</ColonistTitles_SectionColonists>
 
   <ColonistTitles_ShowTitle>Show title</ColonistTitles_ShowTitle>
   <ColonistTitles_ShowRoyalTitle>Show royal title</ColonistTitles_ShowRoyalTitle>
@@ -18,18 +16,15 @@
   <ColonistTitles_DrawBackground>Draw a background behind labels</ColonistTitles_DrawBackground>
   <ColonistTitles_Opacity>Label opacity: {0}</ColonistTitles_Opacity>
 
-  <ColonistTitles_TitleColor>Default title color</ColonistTitles_TitleColor>
+  <ColonistTitles_TitleColor>Title color</ColonistTitles_TitleColor>
   <ColonistTitles_RoyalTitleColor>Royal title color</ColonistTitles_RoyalTitleColor>
   <ColonistTitles_UseIdeoColorForRole>Color roles by ideoligion</ColonistTitles_UseIdeoColorForRole>
   <ColonistTitles_IdeoRoleColor>Ideoligion role color</ColonistTitles_IdeoRoleColor>
   <ColonistTitles_IdeoRoleColorDisabled>Roles use their ideoligion's color. Turn off "Color roles by ideoligion" to choose one color.</ColonistTitles_IdeoRoleColorDisabled>
   <ColonistTitles_RequiresDlc>Requires {0}.</ColonistTitles_RequiresDlc>
   <ColonistTitles_ClickToChoose>Click to choose a color.</ColonistTitles_ClickToChoose>
-  <ColonistTitles_UsingDefault>Uses the default title color. Click to choose a color.</ColonistTitles_UsingDefault>
   <ColonistTitles_Reset>Reset</ColonistTitles_Reset>
   <ColonistTitles_ResetAll>Reset all settings</ColonistTitles_ResetAll>
-  <ColonistTitles_ClearAllColonists>Reset all colonists</ColonistTitles_ClearAllColonists>
-  <ColonistTitles_ColonistsNeedGame>Load a game to choose title colors for individual colonists.</ColonistTitles_ColonistsNeedGame>
 
   <ColonistTitles_PreviewName>Engie</ColonistTitles_PreviewName>
   <ColonistTitles_PreviewTitle>Chief engineer</ColonistTitles_PreviewTitle>
