@@ -8,7 +8,6 @@
   <ColonistTitles_SectionDisplay>Display</ColonistTitles_SectionDisplay>
   <ColonistTitles_SectionColors>Colors</ColonistTitles_SectionColors>
   <ColonistTitles_SectionPreview>Preview</ColonistTitles_SectionPreview>
-  <ColonistTitles_SectionColonists>Colonist title colors</ColonistTitles_SectionColonists>
 
   <ColonistTitles_ShowTitle>Show title</ColonistTitles_ShowTitle>
   <ColonistTitles_ShowRoyalTitle>Show royal title</ColonistTitles_ShowRoyalTitle>
@@ -25,11 +24,8 @@
   <ColonistTitles_IdeoRoleColorDisabled>Roles use their ideoligion's color. Turn off "Color roles by ideoligion" to choose one color.</ColonistTitles_IdeoRoleColorDisabled>
   <ColonistTitles_RequiresDlc>Requires {0}.</ColonistTitles_RequiresDlc>
   <ColonistTitles_ClickToChoose>Click to choose a color.</ColonistTitles_ClickToChoose>
-  <ColonistTitles_UsingDefault>Uses the default title color. Click to choose a color.</ColonistTitles_UsingDefault>
   <ColonistTitles_Reset>Reset</ColonistTitles_Reset>
   <ColonistTitles_ResetAll>Reset all settings</ColonistTitles_ResetAll>
-  <ColonistTitles_ClearAllColonists>Reset all colonists</ColonistTitles_ClearAllColonists>
-  <ColonistTitles_ColonistsNeedGame>Load a game to choose title colors for individual colonists.</ColonistTitles_ColonistsNeedGame>
 
   <ColonistTitles_PreviewName>Engie</ColonistTitles_PreviewName>
   <ColonistTitles_PreviewTitle>Chief engineer</ColonistTitles_PreviewTitle>

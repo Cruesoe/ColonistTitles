@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace ColonistTitles;
 
-/// <summary>Mod settings page: display toggles, colors with a live preview, and per-colonist colors.</summary>
+/// <summary>Mod settings page: display toggles and colors with a live preview.</summary>
 public static class SettingsWindow
 {
     private const float RowHeight = 30f;
     private const float Gap = 12f;
     private const float SwatchSize = 24f;
     private const float ResetWidth = 90f;
-
-    private static Vector2 colonistScroll;
 
     public static void Draw(Rect inRect, ColonistTitlesSettings settings)
     {
@@ -60,9 +57,6 @@ public static class SettingsWindow
             changed = true;
         }
 
-        y += RowHeight;
-        float leftBottom = y;
-
         y = right.y;
         Header(right.x, ref y, columnWidth, "ColonistTitles_SectionColors".Translate());
         ColorRow(right.x, ref y, columnWidth, "ColonistTitles_TitleColor".Translate(), settings.TitleColor, ColonistTitlesSettings.DefaultTitleColor, c => settings.TitleColor = c);
@@ -77,10 +71,6 @@ public static class SettingsWindow
         {
             ColonistTitlesSettings.Version++;
         }
-
-        float listTop = Mathf.Max(leftBottom, y) + Gap;
-        Rect list = new Rect(inRect.x, listTop, inRect.width, bottom.y - Gap - listTop);
-        ColonistList(list, settings);
     }
 
     private static void Header(float x, ref float y, float width, string label)
@@ -205,81 +195,5 @@ public static class SettingsWindow
         }
 
         return rect.yMax;
-    }
-
-    private static void ColonistList(Rect rect, ColonistTitlesSettings settings)
-    {
-        float y = rect.y;
-        Header(rect.x, ref y, rect.width, "ColonistTitles_SectionColonists".Translate());
-
-        if (Current.ProgramState != ProgramState.Playing || PawnTitleColors.Instance == null)
-        {
-            GUI.color = Widgets.InactiveColor;
-            Widgets.Label(new Rect(rect.x, y, rect.width, RowHeight), "ColonistTitles_ColonistsNeedGame".Translate());
-            GUI.color = Color.white;
-            return;
-        }
-
-        List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists.Where(p => p.story != null).OrderBy(p => p.LabelShort).ToList();
-        Rect clearAll = new Rect(rect.xMax - 200f, y, 200f, RowHeight);
-        bool anyCustom = pawns.Any(PawnTitleColors.HasCustom);
-        if (Widgets.ButtonText(clearAll, "ColonistTitles_ClearAllColonists".Translate(), active: anyCustom))
-        {
-            PawnTitleColors.ClearAll();
-        }
-
-        y += RowHeight + 4f;
-        Rect outRect = new Rect(rect.x, y, rect.width, rect.yMax - y);
-        if (outRect.height < RowHeight)
-        {
-            return;
-        }
-
-        Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, pawns.Count * RowHeight);
-        Widgets.BeginScrollView(outRect, ref colonistScroll, viewRect);
-        float rowY = 0f;
-        foreach (Pawn pawn in pawns)
-        {
-            Rect row = new Rect(0f, rowY, viewRect.width, RowHeight);
-            if (((int)(rowY / RowHeight) & 1) == 1)
-            {
-                Widgets.DrawLightHighlight(row);
-            }
-
-            Color current = PawnTitleColors.For(pawn);
-            bool custom = PawnTitleColors.HasCustom(pawn);
-            Rect swatch = new Rect(row.x + 4f, row.y + (RowHeight - SwatchSize) / 2f, SwatchSize, SwatchSize);
-            Rect reset = new Rect(row.xMax - ResetWidth, row.y + 2f, ResetWidth, RowHeight - 4f);
-            Rect nameRect = new Rect(swatch.xMax + 8f, row.y, (reset.x - swatch.xMax) * 0.4f, RowHeight);
-            Rect titleRect = new Rect(nameRect.xMax + 8f, row.y, reset.x - nameRect.xMax - 16f, RowHeight);
-
-            Widgets.DrawBoxSolidWithOutline(swatch, current, Color.white);
-            using (new TextBlock(TextAnchor.MiddleLeft))
-            {
-                Widgets.Label(nameRect, pawn.LabelShortCap.Truncate(nameRect.width));
-                string title = pawn.story.title.NullOrEmpty() ? pawn.story.TitleShortCap : pawn.story.title.CapitalizeFirst();
-                GUI.color = current;
-                Widgets.Label(titleRect, title.Truncate(titleRect.width));
-                GUI.color = Color.white;
-            }
-
-            Rect clickable = new Rect(swatch.x, row.y, titleRect.xMax - swatch.x, RowHeight);
-            Widgets.DrawHighlightIfMouseover(clickable);
-            TooltipHandler.TipRegion(clickable, custom ? "ColonistTitles_ClickToChoose".Translate() : "ColonistTitles_UsingDefault".Translate());
-            if (Widgets.ButtonInvisible(clickable))
-            {
-                Pawn target = pawn;
-                Find.WindowStack.Add(new Dialog_TitleColorPicker(current, settings.TitleColor, c => PawnTitleColors.Set(target, c)));
-            }
-
-            if (Widgets.ButtonText(reset, "ColonistTitles_Reset".Translate(), active: custom))
-            {
-                PawnTitleColors.Clear(pawn);
-            }
-
-            rowY += RowHeight;
-        }
-
-        Widgets.EndScrollView();
     }
 }
