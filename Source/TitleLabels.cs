@@ -5,18 +5,6 @@ using Verse;
 
 namespace ColonistTitles;
 
-public readonly struct TitleLine
-{
-    public readonly string Text;
-    public readonly Color Color;
-
-    public TitleLine(string text, Color color)
-    {
-        Text = text;
-        Color = color;
-    }
-}
-
 /// <summary>Builds and caches the label lines drawn under a pawn's name.</summary>
 public static class TitleLabels
 {
@@ -27,14 +15,25 @@ public static class TitleLabels
     {
         public readonly List<TitleLine> Bar = new List<TitleLine>();
         public readonly List<TitleLine> Map = new List<TitleLine>();
+        public float BarOffset;
+        public float MapOffset;
         public int Frame = int.MinValue;
         public int Version = -1;
     }
 
     private static readonly Dictionary<Pawn, Entry> cache = new Dictionary<Pawn, Entry>();
+    private static Game? cachedGame;
 
-    public static List<TitleLine> For(Pawn pawn, bool forMap)
+    /// <summary>The lines for a pawn, and how far below the name they start (past other mods' labels).</summary>
+    public static List<TitleLine> For(Pawn pawn, bool forMap, out float offset)
     {
+        // Drop pawns from a previous game so it isn't kept in memory.
+        if (Current.Game != cachedGame)
+        {
+            cache.Clear();
+            cachedGame = Current.Game;
+        }
+
         if (!cache.TryGetValue(pawn, out Entry? entry))
         {
             if (cache.Count > 500)
@@ -51,6 +50,7 @@ public static class TitleLabels
             Rebuild(pawn, entry);
         }
 
+        offset = forMap ? entry.MapOffset : entry.BarOffset;
         return forMap ? entry.Map : entry.Bar;
     }
 
@@ -61,6 +61,8 @@ public static class TitleLabels
         entry.Version = ColonistTitlesSettings.Version;
         entry.Bar.Clear();
         entry.Map.Clear();
+        entry.BarOffset = UsefulMarksCompat.LabelHeight(pawn, onColonistBar: true);
+        entry.MapOffset = UsefulMarksCompat.LabelHeight(pawn, onColonistBar: false);
 
         string? title = Title(pawn, settings);
         if (title != null)

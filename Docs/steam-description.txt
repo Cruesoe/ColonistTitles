@@ -4,7 +4,7 @@ Set a title in the Bio tab's rename dialog so you can tell your doctors from you
 
 [h2]Features[/h2]
 [list]
-[*]The colonist's title appears under their name on the colonist bar and on the map. Colonists without a title can show their backstory title instead.
+[*]The colonist's title appears under their name on the colonist bar, and on the map if you turn it on. Colonists without a title can show their backstory title instead.
 [*]Royal titles (Royalty) and ideoligion roles (Ideology) can appear as extra lines.
 [*]A full color picker with a color wheel, RGB, HSV and hex fields, and a palette.
 [/list]

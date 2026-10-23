@@ -160,7 +160,7 @@ public static class SettingsWindow
 
         if (ideology && (settings.BarIdeoRole || settings.MapIdeoRole))
         {
-            Color roleColor = settings.UseIdeoColorForRole ? new Color(0.55f, 0.75f, 0.45f) : settings.IdeoRoleColor;
+            Color roleColor = settings.UseIdeoColorForRole ? PreviewIdeoColor() : settings.IdeoRoleColor;
             lines.Add(new TitleLine("ColonistTitles_PreviewIdeoRole".Translate(), roleColor));
         }
 
@@ -195,5 +195,12 @@ public static class SettingsWindow
         }
 
         return rect.yMax;
+    }
+
+    // The player's primary ideoligion color in a game; a sample color on the main menu.
+    private static Color PreviewIdeoColor()
+    {
+        Ideo? ideo = Current.ProgramState == ProgramState.Playing ? Faction.OfPlayer?.ideos?.PrimaryIdeo : null;
+        return ideo?.Color ?? new Color(0.55f, 0.75f, 0.45f);
     }
 }

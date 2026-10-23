@@ -4,7 +4,7 @@
     <RootNamespace>ColonistTitles</RootNamespace>
     <AssemblyName>ColonistTitles</AssemblyName>
     <Nullable>enable</Nullable>
-    <UnityModules>CoreModule;IMGUIModule;TextRenderingModule;InputLegacyModule</UnityModules>
+    <UnityModules>CoreModule;IMGUIModule;TextRenderingModule</UnityModules>
   </PropertyGroup>
 
 </Project>

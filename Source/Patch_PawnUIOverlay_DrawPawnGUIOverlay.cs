@@ -23,13 +23,13 @@ public static class Patch_PawnUIOverlay_DrawPawnGUIOverlay
             return;
         }
 
-        var lines = TitleLabels.For(pawn, forMap: true);
+        var lines = TitleLabels.For(pawn, forMap: true, out float offset);
         if (lines.Count == 0)
         {
             return;
         }
 
         Vector2 pos = GenMapUI.LabelDrawPosFor(pawn, -0.6f);
-        LabelDrawer.DrawLines(lines, pos.x, pos.y + LabelDrawer.NameHeight, 9999f, 1f);
+        LabelDrawer.DrawLines(lines, pos.x, pos.y + LabelDrawer.NameHeight + offset, 9999f, 1f);
     }
 }
