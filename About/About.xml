@@ -10,7 +10,7 @@
   </supportedVersions>
   <description>Shows each colonist's title under their name on the colonist bar and on the map, with their royal title and ideoligion role if they have one.
 
-Set a title in the Bio tab's rename dialog. Each colonist can have their own title color: click the palette button on their Bio tab.</description>
+Set a title in the Bio tab's rename dialog. Choose which lines show where, and their colors, in the mod settings.</description>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>

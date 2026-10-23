@@ -65,7 +65,7 @@ public static class TitleLabels
         string? title = Title(pawn, settings);
         if (title != null)
         {
-            TitleLine line = new TitleLine(title, PawnTitleColors.For(pawn));
+            TitleLine line = new TitleLine(title, settings.TitleColor);
             if (settings.BarTitle)
             {
                 entry.Bar.Add(line);

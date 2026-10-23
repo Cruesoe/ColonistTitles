@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ColonistTitles_ModName>Colonist Titles</ColonistTitles_ModName>
-  <ColonistTitles_TitleColorButton>Choose the color of {PAWN_labelShort}'s title.</ColonistTitles_TitleColorButton>
 
   <ColonistTitles_SectionBar>Colonist bar</ColonistTitles_SectionBar>
   <ColonistTitles_SectionMap>Map</ColonistTitles_SectionMap>
@@ -17,7 +16,7 @@
   <ColonistTitles_DrawBackground>Draw a background behind labels</ColonistTitles_DrawBackground>
   <ColonistTitles_Opacity>Label opacity: {0}</ColonistTitles_Opacity>
 
-  <ColonistTitles_TitleColor>Default title color</ColonistTitles_TitleColor>
+  <ColonistTitles_TitleColor>Title color</ColonistTitles_TitleColor>
   <ColonistTitles_RoyalTitleColor>Royal title color</ColonistTitles_RoyalTitleColor>
   <ColonistTitles_UseIdeoColorForRole>Color roles by ideoligion</ColonistTitles_UseIdeoColorForRole>
   <ColonistTitles_IdeoRoleColor>Ideoligion role color</ColonistTitles_IdeoRoleColor>
