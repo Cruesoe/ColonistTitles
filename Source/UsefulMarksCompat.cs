@@ -10,6 +10,9 @@ namespace ColonistTitles;
 [StaticConstructorOnStartup]
 public static class UsefulMarksCompat
 {
+    // Useful Marks in Colony Groups draws Useful Marks' label on Colony Groups' bar too.
+    public static readonly bool LabelsOnColonyGroupsBar = ModsConfig.IsActive("TrueMogician.UsefulMarksInColonyGroups");
+
     private static Func<Pawn, bool, bool>? shouldDrawLabel;
     private static Func<bool>? drawOnColonistBar;
 

@@ -57,6 +57,16 @@ public static class SettingsWindow
             changed = true;
         }
 
+        y += RowHeight;
+        Widgets.Label(new Rect(left.x, y, columnWidth, RowHeight), "ColonistTitles_TextSize".Translate(settings.TextScale.ToStringPercent()));
+        y += 24f;
+        float textScale = Widgets.HorizontalSlider(new Rect(left.x, y, columnWidth, RowHeight), settings.TextScale, 0.5f, 2f, roundTo: 0.05f);
+        if (textScale != settings.TextScale)
+        {
+            settings.TextScale = textScale;
+            changed = true;
+        }
+
         y = right.y;
         Header(right.x, ref y, columnWidth, "ColonistTitles_SectionColors".Translate());
         ColorRow(right.x, ref y, columnWidth, "ColonistTitles_TitleColor".Translate(), settings.TitleColor, ColonistTitlesSettings.DefaultTitleColor, c => settings.TitleColor = c);
@@ -164,7 +174,7 @@ public static class SettingsWindow
             lines.Add(new TitleLine("ColonistTitles_PreviewIdeoRole".Translate(), roleColor));
         }
 
-        float height = 16f + LabelDrawer.LineHeight + Math.Max(1, lines.Count) * LabelDrawer.LineHeight + 16f;
+        float height = 16f + LabelDrawer.LineHeight + Math.Max(LabelDrawer.LineHeight, lines.Count * LabelDrawer.ScaledLineHeight) + 16f;
         rect.height = height;
         Widgets.DrawBoxSolidWithOutline(rect, new Color(0.12f, 0.13f, 0.12f), new Color(1f, 1f, 1f, 0.2f));
 

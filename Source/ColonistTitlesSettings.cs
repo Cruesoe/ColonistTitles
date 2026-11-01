@@ -22,6 +22,7 @@ public class ColonistTitlesSettings : ModSettings
     public Color RoyalTitleColor = DefaultRoyalTitleColor;
     public Color IdeoRoleColor = DefaultIdeoRoleColor;
     public float Opacity = 0.9f;
+    public float TextScale = 1f;
 
     // Bumped on any change so cached labels rebuild.
     public static int Version;
@@ -41,6 +42,7 @@ public class ColonistTitlesSettings : ModSettings
         RoyalTitleColor = DefaultRoyalTitleColor;
         IdeoRoleColor = DefaultIdeoRoleColor;
         Opacity = 0.9f;
+        TextScale = 1f;
         Version++;
     }
 
@@ -59,6 +61,7 @@ public class ColonistTitlesSettings : ModSettings
         Scribe_Values.Look(ref RoyalTitleColor, "royalTitleColor", DefaultRoyalTitleColor);
         Scribe_Values.Look(ref IdeoRoleColor, "ideoRoleColor", DefaultIdeoRoleColor);
         Scribe_Values.Look(ref Opacity, "opacity", 0.9f);
+        Scribe_Values.Look(ref TextScale, "textScale", 1f);
         Version++;
     }
 }

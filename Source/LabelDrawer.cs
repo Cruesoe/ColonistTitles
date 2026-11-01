@@ -13,6 +13,9 @@ public static class LabelDrawer
     // Height of the vanilla name label this mod draws under.
     public static float NameHeight => Prefs.DisableTinyText ? GenMapUI.NameBGHeight_Small : GenMapUI.NameBGHeight_Tiny;
 
+    // Height of one line on screen at the current text size.
+    public static float ScaledLineHeight => LineHeight * ColonistTitlesMod.Settings.TextScale;
+
     /// <summary>Draws up to maxLines lines centered on x, the first one's top at y.</summary>
     public static void DrawLines(IReadOnlyList<TitleLine> lines, float x, float y, float maxWidth, float alpha, int maxLines = int.MaxValue)
     {
@@ -26,13 +29,24 @@ public static class LabelDrawer
         GameFont oldFont = Text.Font;
         TextAnchor oldAnchor = Text.Anchor;
         Color oldColor = GUI.color;
+        Matrix4x4 oldMatrix = GUI.matrix;
         Text.Font = GameFont.Small;
         Text.Anchor = TextAnchor.UpperCenter;
         float opacity = settings.Opacity * alpha;
 
+        // Layout below stays in unscaled units; the matrix scales it around the first line's top center.
+        float scale = settings.TextScale;
+        bool scaled = scale != 1f;
+        if (scaled)
+        {
+            GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), new Vector2(x, y));
+        }
+
+        float scaledMaxWidth = maxWidth / scale;
+
         for (int i = 0; i < count; i++)
         {
-            string text = lines[i].Shown(maxWidth, out float width);
+            string text = lines[i].Shown(scaledMaxWidth, out float width);
             Rect background = new Rect(x - width / 2f - BackgroundPadding, y + i * LineHeight, width + BackgroundPadding * 2f, LineHeight);
             if (settings.DrawBackground)
             {
@@ -44,6 +58,11 @@ public static class LabelDrawer
             color.a = opacity;
             GUI.color = color;
             Widgets.Label(new Rect(x - width / 2f, background.y - 2f, width, 100f), text);
+        }
+
+        if (scaled)
+        {
+            GUI.matrix = oldMatrix;
         }
 
         GUI.color = oldColor;

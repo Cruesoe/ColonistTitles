@@ -13,11 +13,12 @@ Set a title in the Bio tab's rename dialog so you can tell your doctors from you
 [list]
 [*][b]Colonist bar and Map[/b]: choose which lines show in each place. By default the bar shows all three lines and the map shows none.
 [*][b]Colors[/b]: the title color, the royal title color, and the ideoligion role color (or each role's ideoligion color). A live preview shows the result.
-[*][b]Display[/b]: label background and opacity.
+[*][b]Display[/b]: label background, opacity and text size, from 50% to 200%.
 [/list]
 
 [h2]Compatibility[/h2]
 Works with Colony Groups: titles show under names on its colonist bar.
+Works with Useful Marks: titles start below its label.
 Not compatible with Job In Bar or Titles For Me, which draw the same labels.
 Safe to add to an existing save.
 
