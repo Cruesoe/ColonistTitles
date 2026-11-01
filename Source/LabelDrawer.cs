@@ -36,7 +36,12 @@ public static class LabelDrawer
 
         // Layout below stays in unscaled units; the matrix scales it around the first line's top center.
         float scale = settings.TextScale;
-        GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), new Vector2(x, y));
+        bool scaled = scale != 1f;
+        if (scaled)
+        {
+            GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), new Vector2(x, y));
+        }
+
         float scaledMaxWidth = maxWidth / scale;
 
         for (int i = 0; i < count; i++)
@@ -55,7 +60,11 @@ public static class LabelDrawer
             Widgets.Label(new Rect(x - width / 2f, background.y - 2f, width, 100f), text);
         }
 
-        GUI.matrix = oldMatrix;
+        if (scaled)
+        {
+            GUI.matrix = oldMatrix;
+        }
+
         GUI.color = oldColor;
         Text.Anchor = oldAnchor;
         Text.Font = oldFont;

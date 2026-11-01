@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using HarmonyLib;
@@ -15,6 +16,7 @@ public static class Patch_ColonyGroups_DrawColonist
     private static Func<object, float>? getScale;
     private static Func<object, float>? getSpace;
     private static Func<object, Rect, float>? getAlpha;
+    private static Func<object, List<Rect>>? getDrawLocs;
 
     public static bool Prepare()
     {
@@ -30,7 +32,8 @@ public static class Patch_ColonyGroups_DrawColonist
         PropertyInfo? scale = AccessTools.Property(bar, "Scale");
         PropertyInfo? space = AccessTools.Property(bar, "SpaceBetweenColonistsHorizontal");
         MethodInfo? alpha = AccessTools.Method(bar, "GetEntryRectAlpha", new[] { typeof(Rect) });
-        if (barField == null || !barField.IsStatic || scale == null || space == null || alpha == null)
+        PropertyInfo? drawLocs = AccessTools.Property(bar, "DrawLocs");
+        if (barField == null || !barField.IsStatic || scale == null || space == null || alpha == null || drawLocs?.PropertyType != typeof(List<Rect>))
         {
             Log.Warning("[Colonist Titles] Colony Groups found, but its colonist bar has changed. Titles will not show on its bar.");
             return false;
@@ -44,6 +47,7 @@ public static class Patch_ColonyGroups_DrawColonist
         getScale = Expression.Lambda<Func<object, float>>(Expression.Property(typed, scale), instance).Compile();
         getSpace = Expression.Lambda<Func<object, float>>(Expression.Property(typed, space), instance).Compile();
         getAlpha = Expression.Lambda<Func<object, Rect, float>>(Expression.Call(typed, alpha, rect), instance, rect).Compile();
+        getDrawLocs = Expression.Lambda<Func<object, List<Rect>>>(Expression.Property(typed, drawLocs), instance).Compile();
         return true;
     }
 
@@ -52,7 +56,7 @@ public static class Patch_ColonyGroups_DrawColonist
         return AccessTools.Method(DrawerType(), "DrawColonist", new[] { typeof(Rect), typeof(Pawn), typeof(Map), typeof(bool), typeof(bool) });
     }
 
-    public static void Postfix(Rect rect, Pawn colonist, Map pawnMap)
+    public static void Postfix(Rect rect, Pawn colonist, Map pawnMap, bool reordering)
     {
         if (Event.current.type != EventType.Repaint)
         {
@@ -65,7 +69,7 @@ public static class Patch_ColonyGroups_DrawColonist
             return;
         }
 
-        Patch_ColonistBarColonistDrawer_DrawColonist.DrawBarLines(rect, colonist, pawnMap, getScale!(bar), getSpace!(bar), getAlpha!(bar, rect), nextRowTop: null, otherModLabels: false);
+        Patch_ColonistBarColonistDrawer_DrawColonist.DrawBarLines(rect, colonist, pawnMap, getScale!(bar), getSpace!(bar), getAlpha!(bar, rect), reordering, BarRows.NextRowTop(getDrawLocs!(bar), rect.y), otherModLabels: UsefulMarksCompat.LabelsOnColonyGroupsBar);
     }
 
     private static Type? DrawerType()

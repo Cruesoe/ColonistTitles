@@ -67,47 +67,34 @@ public static class TitleLabels
         string? title = Title(pawn, settings);
         if (title != null)
         {
-            TitleLine line = new TitleLine(title, settings.TitleColor);
-            if (settings.BarTitle)
-            {
-                entry.Bar.Add(line);
-            }
-
-            if (settings.MapTitle)
-            {
-                entry.Map.Add(line);
-            }
+            AddLine(entry, title, settings.TitleColor, settings.BarTitle, settings.MapTitle);
         }
 
         string? royal = RoyalTitle(pawn);
         if (royal != null)
         {
-            TitleLine line = new TitleLine(royal, settings.RoyalTitleColor);
-            if (settings.BarRoyalTitle)
-            {
-                entry.Bar.Add(line);
-            }
-
-            if (settings.MapRoyalTitle)
-            {
-                entry.Map.Add(line);
-            }
+            AddLine(entry, royal, settings.RoyalTitleColor, settings.BarRoyalTitle, settings.MapRoyalTitle);
         }
 
         Precept_Role? role = IdeoRole(pawn);
         if (role != null)
         {
             Color color = settings.UseIdeoColorForRole && role.ideo != null ? role.ideo.Color : settings.IdeoRoleColor;
-            TitleLine line = new TitleLine(role.LabelForPawn(pawn).CapitalizeFirst(), color);
-            if (settings.BarIdeoRole)
-            {
-                entry.Bar.Add(line);
-            }
+            AddLine(entry, role.LabelForPawn(pawn).CapitalizeFirst(), color, settings.BarIdeoRole, settings.MapIdeoRole);
+        }
+    }
 
-            if (settings.MapIdeoRole)
-            {
-                entry.Map.Add(line);
-            }
+    // The bar and map draw at different widths, so each list has its own line and measurement cache.
+    private static void AddLine(Entry entry, string text, Color color, bool bar, bool map)
+    {
+        if (bar)
+        {
+            entry.Bar.Add(new TitleLine(text, color));
+        }
+
+        if (map)
+        {
+            entry.Map.Add(new TitleLine(text, color));
         }
     }
 
