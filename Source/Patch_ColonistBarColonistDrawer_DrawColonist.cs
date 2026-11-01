@@ -46,7 +46,7 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
         }
 
         float top = rect.yMax - 4f * scale + LabelDrawer.NameHeight + (otherModLabels ? offset : 0f);
-        int maxLines = nextRowTop.HasValue ? Mathf.FloorToInt((nextRowTop.Value - top) / LabelDrawer.LineHeight) : int.MaxValue;
+        int maxLines = nextRowTop.HasValue ? Mathf.FloorToInt((nextRowTop.Value - top) / LabelDrawer.ScaledLineHeight) : int.MaxValue;
         LabelDrawer.DrawLines(lines, rect.center.x, top, rect.width + spaceBetween - 2f, alpha, maxLines);
     }
 
