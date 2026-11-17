@@ -13,6 +13,8 @@ public static class SettingsWindow
     private const float Gap = 12f;
     private const float SwatchSize = 24f;
     private const float ResetWidth = 90f;
+    private const float MinOffset = -20f;
+    private const float MaxOffset = 40f;
 
     public static void Draw(Rect inRect, ColonistTitlesSettings settings)
     {
@@ -38,34 +40,19 @@ public static class SettingsWindow
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowTitle".Translate(), ref settings.BarTitle);
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowRoyalTitle".Translate(), ref settings.BarRoyalTitle, !royalty, royaltyTip);
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowIdeoRole".Translate(), ref settings.BarIdeoRole, !ideology, ideologyTip);
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_VerticalOffset".Translate(settings.BarOffset.ToString("+0;-0;0")), ref settings.BarOffset, MinOffset, MaxOffset, 1f);
         y += Gap;
         Header(left.x, ref y, columnWidth, "ColonistTitles_SectionMap".Translate());
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowTitle".Translate(), ref settings.MapTitle);
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowRoyalTitle".Translate(), ref settings.MapRoyalTitle, !royalty, royaltyTip);
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowIdeoRole".Translate(), ref settings.MapIdeoRole, !ideology, ideologyTip);
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_VerticalOffset".Translate(settings.MapOffset.ToString("+0;-0;0")), ref settings.MapOffset, MinOffset, MaxOffset, 1f);
         y += Gap;
         Header(left.x, ref y, columnWidth, "ColonistTitles_SectionDisplay".Translate());
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_UseBackstoryTitle".Translate(), ref settings.UseBackstoryTitle, tooltip: "ColonistTitles_UseBackstoryTitle_Desc".Translate());
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_DrawBackground".Translate(), ref settings.DrawBackground);
-        Rect sliderLabel = new Rect(left.x, y, columnWidth, RowHeight);
-        Widgets.Label(sliderLabel, "ColonistTitles_Opacity".Translate(settings.Opacity.ToStringPercent()));
-        y += 24f;
-        float opacity = Widgets.HorizontalSlider(new Rect(left.x, y, columnWidth, RowHeight), settings.Opacity, 0.25f, 1f, roundTo: 0.05f);
-        if (opacity != settings.Opacity)
-        {
-            settings.Opacity = opacity;
-            changed = true;
-        }
-
-        y += RowHeight;
-        Widgets.Label(new Rect(left.x, y, columnWidth, RowHeight), "ColonistTitles_TextSize".Translate(settings.TextScale.ToStringPercent()));
-        y += 24f;
-        float textScale = Widgets.HorizontalSlider(new Rect(left.x, y, columnWidth, RowHeight), settings.TextScale, 0.5f, 2f, roundTo: 0.05f);
-        if (textScale != settings.TextScale)
-        {
-            settings.TextScale = textScale;
-            changed = true;
-        }
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_Opacity".Translate(settings.Opacity.ToStringPercent()), ref settings.Opacity, 0.25f, 1f, 0.05f);
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_TextSize".Translate(settings.TextScale.ToStringPercent()), ref settings.TextScale, 0.5f, 2f, 0.05f);
 
         y = right.y;
         Header(right.x, ref y, columnWidth, "ColonistTitles_SectionColors".Translate());
@@ -96,6 +83,22 @@ public static class SettingsWindow
         Widgets.DrawLineHorizontal(x, rect.yMax, width);
         GUI.color = Color.white;
         y += RowHeight + 6f;
+    }
+
+    // A label row with a slider under it; returns true when the value changed.
+    private static bool Slider(float x, ref float y, float width, string label, ref float value, float min, float max, float roundTo)
+    {
+        Widgets.Label(new Rect(x, y, width, RowHeight), label);
+        y += 24f;
+        float result = Widgets.HorizontalSlider(new Rect(x, y, width, RowHeight), value, min, max, roundTo: roundTo);
+        y += RowHeight;
+        if (result == value)
+        {
+            return false;
+        }
+
+        value = result;
+        return true;
     }
 
     private static bool Checkbox(float x, ref float y, float width, string label, ref bool value, bool disabled = false, string? tooltip = null)

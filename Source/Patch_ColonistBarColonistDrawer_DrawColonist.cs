@@ -47,7 +47,7 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
             alpha *= 0.5f;
         }
 
-        float top = rect.yMax - 4f * scale + LabelDrawer.NameHeight + (otherModLabels ? offset : 0f);
+        float top = rect.yMax - 4f * scale + LabelDrawer.NameHeight + (otherModLabels ? offset : 0f) + ColonistTitlesMod.Settings.BarOffset;
         int maxLines = nextRowTop.HasValue ? Mathf.FloorToInt((nextRowTop.Value - top) / LabelDrawer.ScaledLineHeight) : int.MaxValue;
         LabelDrawer.DrawLines(lines, rect.center.x, top, rect.width + spaceBetween - 2f, alpha, maxLines);
     }

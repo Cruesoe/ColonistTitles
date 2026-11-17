@@ -30,6 +30,6 @@ public static class Patch_PawnUIOverlay_DrawPawnGUIOverlay
         }
 
         Vector2 pos = GenMapUI.LabelDrawPosFor(pawn, -0.6f);
-        LabelDrawer.DrawLines(lines, pos.x, pos.y + LabelDrawer.NameHeight + offset, 9999f, 1f);
+        LabelDrawer.DrawLines(lines, pos.x, pos.y + LabelDrawer.NameHeight + offset + ColonistTitlesMod.Settings.MapOffset, 9999f, 1f);
     }
 }

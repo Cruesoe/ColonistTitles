@@ -16,6 +16,7 @@
   <ColonistTitles_DrawBackground>Draw a background behind labels</ColonistTitles_DrawBackground>
   <ColonistTitles_Opacity>Label opacity: {0}</ColonistTitles_Opacity>
   <ColonistTitles_TextSize>Label text size: {0}</ColonistTitles_TextSize>
+  <ColonistTitles_VerticalOffset>Vertical offset: {0} px</ColonistTitles_VerticalOffset>
 
   <ColonistTitles_TitleColor>Title color</ColonistTitles_TitleColor>
   <ColonistTitles_RoyalTitleColor>Royal title color</ColonistTitles_RoyalTitleColor>

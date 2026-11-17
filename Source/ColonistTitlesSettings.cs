@@ -24,6 +24,10 @@ public class ColonistTitlesSettings : ModSettings
     public float Opacity = 0.9f;
     public float TextScale = 1f;
 
+    // Vertical shift of the title lines in pixels; positive moves them down.
+    public float BarOffset;
+    public float MapOffset;
+
     // Bumped on any change so cached labels rebuild.
     public static int Version;
 
@@ -43,6 +47,8 @@ public class ColonistTitlesSettings : ModSettings
         IdeoRoleColor = DefaultIdeoRoleColor;
         Opacity = 0.9f;
         TextScale = 1f;
+        BarOffset = 0f;
+        MapOffset = 0f;
         Version++;
     }
 
@@ -62,6 +68,8 @@ public class ColonistTitlesSettings : ModSettings
         Scribe_Values.Look(ref IdeoRoleColor, "ideoRoleColor", DefaultIdeoRoleColor);
         Scribe_Values.Look(ref Opacity, "opacity", 0.9f);
         Scribe_Values.Look(ref TextScale, "textScale", 1f);
+        Scribe_Values.Look(ref BarOffset, "barOffset");
+        Scribe_Values.Look(ref MapOffset, "mapOffset");
         Version++;
     }
 }
