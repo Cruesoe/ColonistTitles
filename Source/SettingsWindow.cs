@@ -13,6 +13,7 @@ public static class SettingsWindow
     private const float Gap = 12f;
     private const float SwatchSize = 24f;
     private const float ResetWidth = 90f;
+    private const float ToggleWidth = 100f;
     private const float MinOffset = -20f;
     private const float MaxOffset = 40f;
 
@@ -23,6 +24,8 @@ public static class SettingsWindow
         bool ideology = ModsConfig.IdeologyActive;
         string royaltyTip = "ColonistTitles_RequiresDlc".Translate("Royalty");
         string ideologyTip = "ColonistTitles_RequiresDlc".Translate("Ideology");
+        bool workTemplates = WorkTemplateCompat.Active;
+        string workTemplateTip = workTemplates ? "ColonistTitles_ShowWorkTemplate_Desc".Translate() : "ColonistTitles_RequiresMod".Translate(WorkTemplateCompat.ModName);
 
         Rect bottom = new Rect(inRect.x, inRect.yMax - RowHeight, inRect.width, RowHeight);
         if (Widgets.ButtonText(new Rect(bottom.xMax - 200f, bottom.y, 200f, RowHeight), "ColonistTitles_ResetAll".Translate()))
@@ -36,17 +39,14 @@ public static class SettingsWindow
 
         bool changed = false;
         float y = left.y;
-        Header(left.x, ref y, columnWidth, "ColonistTitles_SectionBar".Translate());
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowTitle".Translate(), ref settings.BarTitle);
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowRoyalTitle".Translate(), ref settings.BarRoyalTitle, !royalty, royaltyTip);
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowIdeoRole".Translate(), ref settings.BarIdeoRole, !ideology, ideologyTip);
-        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_VerticalOffset".Translate(settings.BarOffset.ToString("+0;-0;0")), ref settings.BarOffset, MinOffset, MaxOffset, 1f);
-        y += Gap;
-        Header(left.x, ref y, columnWidth, "ColonistTitles_SectionMap".Translate());
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowTitle".Translate(), ref settings.MapTitle);
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowRoyalTitle".Translate(), ref settings.MapRoyalTitle, !royalty, royaltyTip);
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_ShowIdeoRole".Translate(), ref settings.MapIdeoRole, !ideology, ideologyTip);
-        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_VerticalOffset".Translate(settings.MapOffset.ToString("+0;-0;0")), ref settings.MapOffset, MinOffset, MaxOffset, 1f);
+        Header(left.x, ref y, columnWidth, "ColonistTitles_SectionLines".Translate());
+        LineHeadings(left.x, ref y, columnWidth);
+        changed |= LineRow(left.x, ref y, columnWidth, "ColonistTitles_ShowTitle".Translate(), ref settings.BarTitle, ref settings.MapTitle);
+        changed |= LineRow(left.x, ref y, columnWidth, "ColonistTitles_ShowWorkTemplate".Translate(), ref settings.BarWorkTemplate, ref settings.MapWorkTemplate, !workTemplates, workTemplateTip);
+        changed |= LineRow(left.x, ref y, columnWidth, "ColonistTitles_ShowRoyalTitle".Translate(), ref settings.BarRoyalTitle, ref settings.MapRoyalTitle, !royalty, royaltyTip);
+        changed |= LineRow(left.x, ref y, columnWidth, "ColonistTitles_ShowIdeoRole".Translate(), ref settings.BarIdeoRole, ref settings.MapIdeoRole, !ideology, ideologyTip);
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_BarOffset".Translate(settings.BarOffset.ToString("+0;-0;0")), ref settings.BarOffset, MinOffset, MaxOffset, 1f);
+        changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_MapOffset".Translate(settings.MapOffset.ToString("+0;-0;0")), ref settings.MapOffset, MinOffset, MaxOffset, 1f);
         y += Gap;
         Header(left.x, ref y, columnWidth, "ColonistTitles_SectionDisplay".Translate());
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_UseBackstoryTitle".Translate(), ref settings.UseBackstoryTitle, tooltip: "ColonistTitles_UseBackstoryTitle_Desc".Translate());
@@ -57,12 +57,13 @@ public static class SettingsWindow
         y = right.y;
         Header(right.x, ref y, columnWidth, "ColonistTitles_SectionColors".Translate());
         ColorRow(right.x, ref y, columnWidth, "ColonistTitles_TitleColor".Translate(), settings.TitleColor, ColonistTitlesSettings.DefaultTitleColor, c => settings.TitleColor = c);
+        ColorRow(right.x, ref y, columnWidth, "ColonistTitles_WorkTemplateColor".Translate(), settings.WorkTemplateColor, ColonistTitlesSettings.DefaultWorkTemplateColor, c => settings.WorkTemplateColor = c, !workTemplates, workTemplateTip);
         ColorRow(right.x, ref y, columnWidth, "ColonistTitles_RoyalTitleColor".Translate(), settings.RoyalTitleColor, ColonistTitlesSettings.DefaultRoyalTitleColor, c => settings.RoyalTitleColor = c, !royalty, royaltyTip);
         changed |= Checkbox(right.x, ref y, columnWidth, "ColonistTitles_UseIdeoColorForRole".Translate(), ref settings.UseIdeoColorForRole, !ideology, ideologyTip);
         ColorRow(right.x, ref y, columnWidth, "ColonistTitles_IdeoRoleColor".Translate(), settings.IdeoRoleColor, ColonistTitlesSettings.DefaultIdeoRoleColor, c => settings.IdeoRoleColor = c, !ideology || settings.UseIdeoColorForRole, ideology ? "ColonistTitles_IdeoRoleColorDisabled".Translate().ToString() : ideologyTip);
         y += Gap;
         Header(right.x, ref y, columnWidth, "ColonistTitles_SectionPreview".Translate());
-        y = Preview(new Rect(right.x, y, columnWidth, 0f), settings, royalty, ideology);
+        y = Preview(new Rect(right.x, y, columnWidth, 0f), settings, workTemplates, royalty, ideology);
 
         if (changed)
         {
@@ -99,6 +100,44 @@ public static class SettingsWindow
 
         value = result;
         return true;
+    }
+
+    // Column headings over the line rows' Colonist bar and Map checkboxes.
+    private static void LineHeadings(float x, ref float y, float width)
+    {
+        using (new TextBlock(TextAnchor.MiddleCenter))
+        {
+            GUI.color = Widgets.SeparatorLabelColor;
+            Widgets.Label(new Rect(x + width - ToggleWidth * 2f, y, ToggleWidth, RowHeight), "ColonistTitles_SectionBar".Translate());
+            Widgets.Label(new Rect(x + width - ToggleWidth, y, ToggleWidth, RowHeight), "ColonistTitles_SectionMap".Translate());
+            GUI.color = Color.white;
+        }
+
+        y += RowHeight;
+    }
+
+    // A line's label with its Colonist bar and Map checkboxes; returns true when either changed.
+    private static bool LineRow(float x, ref float y, float width, string label, ref bool bar, ref bool map, bool disabled = false, string? tooltip = null)
+    {
+        Rect rect = new Rect(x, y, width, RowHeight);
+        y += RowHeight;
+        bool barBefore = bar;
+        bool mapBefore = map;
+        Widgets.DrawHighlightIfMouseover(rect);
+        if (!tooltip.NullOrEmpty())
+        {
+            TooltipHandler.TipRegion(rect, tooltip);
+        }
+
+        using (new TextBlock(TextAnchor.MiddleLeft))
+        {
+            Widgets.Label(new Rect(rect.x + 2f, rect.y, rect.width - ToggleWidth * 2f - 4f, RowHeight), label);
+        }
+
+        float boxY = rect.y + (RowHeight - 24f) / 2f;
+        Widgets.Checkbox(rect.xMax - ToggleWidth * 1.5f - 12f, boxY, ref bar, disabled: disabled);
+        Widgets.Checkbox(rect.xMax - ToggleWidth * 0.5f - 12f, boxY, ref map, disabled: disabled);
+        return bar != barBefore || map != mapBefore;
     }
 
     private static bool Checkbox(float x, ref float y, float width, string label, ref bool value, bool disabled = false, string? tooltip = null)
@@ -158,12 +197,17 @@ public static class SettingsWindow
     }
 
     // Draws a sample colonist name with the lines the current settings would show; returns the bottom y.
-    private static float Preview(Rect rect, ColonistTitlesSettings settings, bool royalty, bool ideology)
+    private static float Preview(Rect rect, ColonistTitlesSettings settings, bool workTemplates, bool royalty, bool ideology)
     {
         List<TitleLine> lines = new List<TitleLine>();
         if (settings.BarTitle || settings.MapTitle)
         {
             lines.Add(new TitleLine("ColonistTitles_PreviewTitle".Translate(), settings.TitleColor));
+        }
+
+        if (workTemplates && (settings.BarWorkTemplate || settings.MapWorkTemplate))
+        {
+            lines.Add(new TitleLine("ColonistTitles_PreviewWorkTemplate".Translate(), settings.WorkTemplateColor));
         }
 
         if (royalty && (settings.BarRoyalTitle || settings.MapRoyalTitle))

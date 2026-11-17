@@ -8,7 +8,7 @@
     <li>1.6</li>
     <li>1.7</li>
   </supportedVersions>
-  <description>Shows each colonist's title under their name on the colonist bar and on the map, with their royal title and ideoligion role if they have one.
+  <description>Shows each colonist's title under their name on the colonist bar and on the map, with their royal title and ideoligion role if they have one, and their work template from [LFS] UI Rethemed - Work.
 
 Set a title in the Bio tab's rename dialog. Choose which lines show where, how high they sit, and their colors, in the mod settings.</description>
   <modDependencies>
