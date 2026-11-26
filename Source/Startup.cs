@@ -11,5 +11,6 @@ public static class Startup
         var harmony = new Harmony("cruesoe.colonisttitles");
         harmony.PatchAll(typeof(Startup).Assembly);
         UsefulMarksCompat.PatchIndentBlock(harmony);
+        ColonistPortraitCompat.Patch(harmony);
     }
 }

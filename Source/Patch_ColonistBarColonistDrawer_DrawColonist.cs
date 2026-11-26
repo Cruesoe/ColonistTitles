@@ -18,7 +18,19 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
         }
 
         ColonistBar bar = Find.ColonistBar;
-        DrawBarLines(rect, colonist, pawnMap, bar.Scale, bar.SpaceBetweenColonistsHorizontal, bar.GetEntryRectAlpha(rect), reordering, BarRows.NextRowTop(bar.DrawLocs, rect.y), otherModLabels: true);
+        float? nextRowTop = BarRows.NextRowTop(bar.DrawLocs, rect.y);
+        if (ColonistPortraitCompat.BarOn)
+        {
+            // The themed card holds Useful Marks' title in its name, so lines start right under that.
+            if (colonist != null)
+            {
+                DrawLines(rect, colonist, pawnMap, ColonistPortraitCompat.LinesTop(rect, colonist), ColonistPortraitCompat.CardGap(bar.Scale), bar.GetEntryRectAlpha(rect), reordering, nextRowTop, otherModOffset: false);
+            }
+
+            return;
+        }
+
+        DrawBarLines(rect, colonist, pawnMap, bar.Scale, bar.SpaceBetweenColonistsHorizontal, bar.GetEntryRectAlpha(rect), reordering, nextRowTop, otherModLabels: true);
     }
 
     // Shared with colonist bars that replace the vanilla one, for repaint events only. Lines stop before nextRowTop, when there is a row below.
@@ -29,6 +41,12 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
             return;
         }
 
+        DrawLines(rect, colonist, pawnMap, rect.yMax - 4f * scale + LabelDrawer.NameHeight, spaceBetween, alpha, reordering, nextRowTop, otherModLabels);
+    }
+
+    // nameBottom is where the name label ends; other mods' labels under it and the bar offset setting are added here.
+    private static void DrawLines(Rect rect, Pawn colonist, Map pawnMap, float nameBottom, float spaceBetween, float alpha, bool reordering, float? nextRowTop, bool otherModOffset)
+    {
         var lines = TitleLabels.For(colonist, forMap: false, out float offset);
         if (lines.Count == 0)
         {
@@ -47,7 +65,7 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
             alpha *= 0.5f;
         }
 
-        float top = rect.yMax - 4f * scale + LabelDrawer.NameHeight + (otherModLabels ? offset : 0f) + ColonistTitlesMod.Settings.BarOffset;
+        float top = nameBottom + (otherModOffset ? offset : 0f) + ColonistTitlesMod.Settings.BarOffset;
         int maxLines = nextRowTop.HasValue ? Mathf.FloorToInt((nextRowTop.Value - top) / LabelDrawer.ScaledLineHeight) : int.MaxValue;
         LabelDrawer.DrawLines(lines, rect.center.x, top, rect.width + spaceBetween - 2f, alpha, maxLines);
     }

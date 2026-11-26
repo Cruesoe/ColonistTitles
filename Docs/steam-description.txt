@@ -21,6 +21,7 @@ Set a title in the Bio tab's rename dialog so you can tell your doctors from you
 Works with Colony Groups: titles show under names on its colonist bar.
 Works with Useful Marks: titles start below its label.
 Works with [LFS] UI Rethemed - Work: shows its work templates.
+Works with [LFS] UI Rethemed - Colonist Portrait: titles show under the name on its themed cards.
 Not compatible with Job In Bar or Titles For Me, which draw the same labels.
 Safe to add to an existing save.
 
