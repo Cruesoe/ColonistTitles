@@ -40,11 +40,18 @@ public static class ColonistPortraitCompat
             return;
         }
 
-        barOn = AccessTools.MethodDelegate<Func<bool>>(on);
-        handingOnName = AccessTools.MethodDelegate<Func<bool>>(handing);
-        belowCard = AccessTools.MethodDelegate<Func<float, float>>(room);
-        columnGap = AccessTools.MethodDelegate<Func<float, float>>(gap);
-        harmony.Patch(label, postfix: new HarmonyMethod(typeof(ColonistPortraitCompat), nameof(DrawPawnLabelPostfix)));
+        try
+        {
+            handingOnName = AccessTools.MethodDelegate<Func<bool>>(handing);
+            belowCard = AccessTools.MethodDelegate<Func<float, float>>(room);
+            columnGap = AccessTools.MethodDelegate<Func<float, float>>(gap);
+            harmony.Patch(label, postfix: new HarmonyMethod(typeof(ColonistPortraitCompat), nameof(DrawPawnLabelPostfix)));
+            barOn = AccessTools.MethodDelegate<Func<bool>>(on);
+        }
+        catch (Exception e)
+        {
+            Log.Warning("[Colonist Titles] UI Rethemed - Colonist Portrait found, but its colonist bar has changed. Titles may overlap its cards. " + e.Message);
+        }
     }
 
     /// <summary>True while the themed colonist bar replaces vanilla's.</summary>
@@ -85,12 +92,13 @@ public static class ColonistPortraitCompat
     }
 
     // The themed card skips the game's label drawing with a prefix; postfixes still run and get its name pill.
-    private static void DrawPawnLabelPostfix(Pawn pawn, Rect pawnRect)
+    // Matches GenMapUI.DrawPawnLabel(Pawn pawn, Rect bgRect, ...) in 1.6 and 1.7.
+    private static void DrawPawnLabelPostfix(Pawn pawn, Rect bgRect)
     {
         if (handingOnName != null && handingOnName())
         {
             pillPawn = pawn;
-            pillBottom = pawnRect.yMax;
+            pillBottom = bgRect.yMax;
         }
     }
 }
