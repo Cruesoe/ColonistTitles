@@ -70,12 +70,6 @@ public static class TitleLabels
             AddLine(entry, title, settings.TitleColor, settings.BarTitle, settings.MapTitle);
         }
 
-        string? template = WorkTemplateCompat.Label(pawn);
-        if (template != null)
-        {
-            AddLine(entry, template, settings.WorkTemplateColor, settings.BarWorkTemplate, settings.MapWorkTemplate);
-        }
-
         string? royal = RoyalTitle(pawn);
         if (royal != null)
         {
@@ -110,6 +104,13 @@ public static class TitleLabels
         if (story == null)
         {
             return null;
+        }
+
+        // A colonist's work templates replace the title when they have any.
+        string? template = settings.WorkTemplateAsTitle ? WorkTemplateCompat.Label(pawn) : null;
+        if (template != null)
+        {
+            return template;
         }
 
         if (!story.title.NullOrEmpty())

@@ -10,12 +10,12 @@
   <ColonistTitles_SectionPreview>Preview</ColonistTitles_SectionPreview>
 
   <ColonistTitles_ShowTitle>Show title</ColonistTitles_ShowTitle>
-  <ColonistTitles_ShowWorkTemplate>Show work template</ColonistTitles_ShowWorkTemplate>
-  <ColonistTitles_ShowWorkTemplate_Desc>Shows the work templates assigned in the Work tab. A colonist with several shows the first, then how many more (Cook +1).</ColonistTitles_ShowWorkTemplate_Desc>
   <ColonistTitles_ShowRoyalTitle>Show royal title</ColonistTitles_ShowRoyalTitle>
   <ColonistTitles_ShowIdeoRole>Show ideoligion role</ColonistTitles_ShowIdeoRole>
   <ColonistTitles_UseBackstoryTitle>Use backstory title when no title is set</ColonistTitles_UseBackstoryTitle>
   <ColonistTitles_UseBackstoryTitle_Desc>Colonists without a title set in the rename dialog show their backstory title instead. Turn off to show only titles you have set.</ColonistTitles_UseBackstoryTitle_Desc>
+  <ColonistTitles_WorkTemplateAsTitle>Use work template as title</ColonistTitles_WorkTemplateAsTitle>
+  <ColonistTitles_WorkTemplateAsTitle_Desc>Colonists with work templates assigned in the Work tab show them as their title. A colonist with several shows the first, then how many more (Cook +1). Colonists without one keep their usual title.</ColonistTitles_WorkTemplateAsTitle_Desc>
   <ColonistTitles_DrawBackground>Draw a background behind labels</ColonistTitles_DrawBackground>
   <ColonistTitles_Opacity>Label opacity: {0}</ColonistTitles_Opacity>
   <ColonistTitles_TextSize>Label text size: {0}</ColonistTitles_TextSize>
@@ -23,7 +23,6 @@
   <ColonistTitles_MapOffset>Map offset: {0} px</ColonistTitles_MapOffset>
 
   <ColonistTitles_TitleColor>Title color</ColonistTitles_TitleColor>
-  <ColonistTitles_WorkTemplateColor>Work template color</ColonistTitles_WorkTemplateColor>
   <ColonistTitles_RoyalTitleColor>Royal title color</ColonistTitles_RoyalTitleColor>
   <ColonistTitles_UseIdeoColorForRole>Color roles by ideoligion</ColonistTitles_UseIdeoColorForRole>
   <ColonistTitles_IdeoRoleColor>Ideoligion role color</ColonistTitles_IdeoRoleColor>
