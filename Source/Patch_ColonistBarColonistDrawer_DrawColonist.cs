@@ -24,6 +24,7 @@ public static class Patch_ColonistBarColonistDrawer_DrawColonist
             // The themed card holds Useful Marks' title in its name, so lines start right under that.
             if (colonist != null)
             {
+                ColonistPortraitCompat.NoteLines(TitleLabels.For(colonist, forMap: false, out _).Count);
                 DrawLines(rect, colonist, pawnMap, ColonistPortraitCompat.LinesTop(rect, colonist), ColonistPortraitCompat.CardGap(bar.Scale), bar.GetEntryRectAlpha(rect), reordering, nextRowTop, otherModOffset: false);
             }
 
