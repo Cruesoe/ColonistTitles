@@ -106,13 +106,6 @@ public static class TitleLabels
             return null;
         }
 
-        // A colonist's work templates replace the title when they have any.
-        string? template = settings.WorkTemplateAsTitle ? WorkTemplateCompat.Label(pawn) : null;
-        if (template != null)
-        {
-            return template;
-        }
-
         if (!story.title.NullOrEmpty())
         {
             return story.title.CapitalizeFirst();

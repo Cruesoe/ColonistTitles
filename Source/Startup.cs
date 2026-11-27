@@ -12,5 +12,6 @@ public static class Startup
         harmony.PatchAll(typeof(Startup).Assembly);
         UsefulMarksCompat.PatchIndentBlock(harmony);
         ColonistPortraitCompat.Patch(harmony);
+        WorkTemplateCompat.Patch(harmony);
     }
 }

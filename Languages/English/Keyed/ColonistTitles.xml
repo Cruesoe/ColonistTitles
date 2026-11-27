@@ -15,7 +15,7 @@
   <ColonistTitles_UseBackstoryTitle>Use backstory title when no title is set</ColonistTitles_UseBackstoryTitle>
   <ColonistTitles_UseBackstoryTitle_Desc>Colonists without a title set in the rename dialog show their backstory title instead. Turn off to show only titles you have set.</ColonistTitles_UseBackstoryTitle_Desc>
   <ColonistTitles_WorkTemplateAsTitle>Use work template as title</ColonistTitles_WorkTemplateAsTitle>
-  <ColonistTitles_WorkTemplateAsTitle_Desc>Colonists with work templates assigned in the Work tab show them as their title. A colonist with several shows the first, then how many more (Cook +1). Colonists without one keep their usual title.</ColonistTitles_WorkTemplateAsTitle_Desc>
+  <ColonistTitles_WorkTemplateAsTitle_Desc>Assigning a work template in the Work tab makes it the colonist's title, shown everywhere the game shows titles. A colonist with several takes the first. Removing their last template gives them back their backstory title.</ColonistTitles_WorkTemplateAsTitle_Desc>
   <ColonistTitles_DrawBackground>Draw a background behind labels</ColonistTitles_DrawBackground>
   <ColonistTitles_Opacity>Label opacity: {0}</ColonistTitles_Opacity>
   <ColonistTitles_TextSize>Label text size: {0}</ColonistTitles_TextSize>

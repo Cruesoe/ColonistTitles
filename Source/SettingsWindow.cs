@@ -49,7 +49,12 @@ public static class SettingsWindow
         y += Gap;
         Header(left.x, ref y, columnWidth, "ColonistTitles_SectionDisplay".Translate());
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_UseBackstoryTitle".Translate(), ref settings.UseBackstoryTitle, tooltip: "ColonistTitles_UseBackstoryTitle_Desc".Translate());
-        changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_WorkTemplateAsTitle".Translate(), ref settings.WorkTemplateAsTitle, !workTemplates, workTemplateTip);
+        if (Checkbox(left.x, ref y, columnWidth, "ColonistTitles_WorkTemplateAsTitle".Translate(), ref settings.WorkTemplateAsTitle, !workTemplates, workTemplateTip))
+        {
+            changed = true;
+            WorkTemplateCompat.SyncAll();
+        }
+
         changed |= Checkbox(left.x, ref y, columnWidth, "ColonistTitles_DrawBackground".Translate(), ref settings.DrawBackground);
         changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_Opacity".Translate(settings.Opacity.ToStringPercent()), ref settings.Opacity, 0.25f, 1f, 0.05f);
         changed |= Slider(left.x, ref y, columnWidth, "ColonistTitles_TextSize".Translate(settings.TextScale.ToStringPercent()), ref settings.TextScale, 0.5f, 2f, 0.05f);
