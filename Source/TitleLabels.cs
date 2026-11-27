@@ -70,12 +70,6 @@ public static class TitleLabels
             AddLine(entry, title, settings.TitleColor, settings.BarTitle, settings.MapTitle);
         }
 
-        string? template = WorkTemplateCompat.Label(pawn);
-        if (template != null)
-        {
-            AddLine(entry, template, settings.WorkTemplateColor, settings.BarWorkTemplate, settings.MapWorkTemplate);
-        }
-
         string? royal = RoyalTitle(pawn);
         if (royal != null)
         {

@@ -8,6 +8,10 @@ public static class Startup
 {
     static Startup()
     {
-        new Harmony("cruesoe.colonisttitles").PatchAll();
+        var harmony = new Harmony("cruesoe.colonisttitles");
+        harmony.PatchAll(typeof(Startup).Assembly);
+        UsefulMarksCompat.PatchIndentBlock(harmony);
+        ColonistPortraitCompat.Patch(harmony);
+        WorkTemplateCompat.Patch(harmony);
     }
 }
